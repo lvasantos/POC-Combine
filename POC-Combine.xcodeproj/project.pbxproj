@@ -17,9 +17,6 @@
 		7E5211332AA74C3D0080F92C /* POC_CombineUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5211322AA74C3D0080F92C /* POC_CombineUITestsLaunchTests.swift */; };
 		7E5211442AAF45F90080F92C /* SenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5211432AAF45F90080F92C /* SenderViewController.swift */; };
 		7E5211462AAF49550080F92C /* SessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5211452AAF49550080F92C /* SessionViewModel.swift */; };
-		7E5211482AAF8D7F0080F92C /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5211472AAF8D7F0080F92C /* RoomModel.swift */; };
-		7E52114A2AAF941A0080F92C /* RoomListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5211492AAF941A0080F92C /* RoomListViewModel.swift */; };
-		7E52114C2AAF99BD0080F92C /* RoomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E52114B2AAF99BD0080F92C /* RoomListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,9 +51,6 @@
 		7E5211322AA74C3D0080F92C /* POC_CombineUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POC_CombineUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7E5211432AAF45F90080F92C /* SenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderViewController.swift; sourceTree = "<group>"; };
 		7E5211452AAF49550080F92C /* SessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewModel.swift; sourceTree = "<group>"; };
-		7E5211472AAF8D7F0080F92C /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
-		7E5211492AAF941A0080F92C /* RoomListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomListViewModel.swift; sourceTree = "<group>"; };
-		7E52114B2AAF99BD0080F92C /* RoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +106,6 @@
 				7E5211132AA74C3B0080F92C /* ReceiverViewController.swift */,
 				7E5211432AAF45F90080F92C /* SenderViewController.swift */,
 				7E5211452AAF49550080F92C /* SessionViewModel.swift */,
-				7E52114D2AAF9AA50080F92C /* Room */,
 				7E5211182AA74C3C0080F92C /* Assets.xcassets */,
 				7E52111A2AA74C3C0080F92C /* LaunchScreen.storyboard */,
 				7E52111D2AA74C3C0080F92C /* Info.plist */,
@@ -135,16 +128,6 @@
 				7E5211322AA74C3D0080F92C /* POC_CombineUITestsLaunchTests.swift */,
 			);
 			path = "POC-CombineUITests";
-			sourceTree = "<group>";
-		};
-		7E52114D2AAF9AA50080F92C /* Room */ = {
-			isa = PBXGroup;
-			children = (
-				7E5211472AAF8D7F0080F92C /* RoomModel.swift */,
-				7E5211492AAF941A0080F92C /* RoomListViewModel.swift */,
-				7E52114B2AAF99BD0080F92C /* RoomListViewController.swift */,
-			);
-			path = Room;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,12 +262,9 @@
 			files = (
 				7E5211442AAF45F90080F92C /* SenderViewController.swift in Sources */,
 				7E5211462AAF49550080F92C /* SessionViewModel.swift in Sources */,
-				7E5211482AAF8D7F0080F92C /* RoomModel.swift in Sources */,
 				7E5211142AA74C3B0080F92C /* ReceiverViewController.swift in Sources */,
 				7E5211102AA74C3B0080F92C /* AppDelegate.swift in Sources */,
-				7E52114A2AAF941A0080F92C /* RoomListViewModel.swift in Sources */,
 				7E5211122AA74C3B0080F92C /* SceneDelegate.swift in Sources */,
-				7E52114C2AAF99BD0080F92C /* RoomListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
