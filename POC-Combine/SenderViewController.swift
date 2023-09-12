@@ -24,7 +24,7 @@ class SenderViewController: UIViewController {
 
     private let nameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Escreva o nome da sala..."
+        textField.placeholder = "Session Name..."
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
 
@@ -33,7 +33,7 @@ class SenderViewController: UIViewController {
 
     private let submitButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Criar sala", for: .normal)
+        button.setTitle("Create Session", for: .normal)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 8
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -41,43 +41,86 @@ class SenderViewController: UIViewController {
         return button
     }()
 
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupView()
+        setupTable()
+
+        // Reload the table view whenever sessions change
+        viewModel.sessionPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &cancellables)
     }
 
     private func setupView() {
+        // Add and configure UI elements
         view.addSubview(nameTextField)
         NSLayoutConstraint.activate([
-            nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            nameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 24),
-            nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -24),
         ])
 
         view.addSubview(submitButton)
         NSLayoutConstraint.activate([
-            submitButton.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 24),
-            submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            submitButton.widthAnchor.constraint(equalToConstant: 100),
-            submitButton.heightAnchor.constraint(equalToConstant: 48)
+            submitButton.centerYAnchor.constraint(equalTo: nameTextField.centerYAnchor),
+            submitButton.leadingAnchor.constraint(equalTo: nameTextField.trailingAnchor, constant: 24),
+            submitButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
         submitButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
+
+        view.addSubview(tableView)
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 24),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -24),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+
+    private func setupTable() {
+        tableView.dataSource = self
+        tableView.delegate = self
     }
 
     @objc func submitButtonTapped() {
+        if let name = nameTextField.text, !name.isEmpty {
+            viewModel.addSession(name: name)
 
-        if let name = nameTextField.text {
-            viewModel.name = name
-            // Navigate to ReceiverViewController
-            let receiverVC = ReceiverViewController()
-            receiverVC.viewModel = viewModel
-            navigationController?.pushViewController(receiverVC, animated: true)
-
-//             Clear the text field
+            // Clear the text field
             nameTextField.text = ""
         }
     }
 }
 
+extension SenderViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.sessions.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let session = viewModel.sessions[indexPath.row]
+        cell.textLabel?.text = "\(session.name): \(session.theme)"
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let session = viewModel.sessions[indexPath.row]
+        viewModel.selectedSession = session
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        let receiverVC = ReceiverViewController()
+        receiverVC.viewModel = viewModel
+        navigationController?.present(receiverVC, animated: true)
+    }
+}
